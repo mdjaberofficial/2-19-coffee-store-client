@@ -33,6 +33,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
                         text: "Your file has been deleted.",
                         icon: "success"
                     });
+                    //remove the deleted coffee from the UI
                     const remaining = coffees.filter(cof => cof._id !== id);
                     setCoffees(remaining);
                 }
