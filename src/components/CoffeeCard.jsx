@@ -1,11 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router';
+
 import Swal from 'sweetalert2';
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
     const { name, price, photo,quantity, _id:id } = coffee;
 
     const handleDelete = (id) => {
-        console.log('delete', id);
+        // console.log('delete', id);
         
         //sweet alert2
         Swal.fire({
@@ -18,7 +20,6 @@ const CoffeeCard = ({ coffee }) => {
         confirmButtonText: "Yes, delete it!"
         }).then((result) => {
 
-            console.log(result.isConfirmed);
         if (result.isConfirmed) {
             // send delete request to the server
             fetch(`http://localhost:3000/coffees/${id}`, {
@@ -26,12 +27,15 @@ const CoffeeCard = ({ coffee }) => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log('AFTER DELETE',data);
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
+                if(data.deletedCount > 0){
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                    const remaining = coffees.filter(cof => cof._id !== id);
+                    setCoffees(remaining);
+                }
             })
             .catch(error => {
                 console.error('Error deleting coffee:', error);
@@ -65,8 +69,8 @@ const CoffeeCard = ({ coffee }) => {
    
     <div className="card-actions justify-end">
       <div className="join join-vertical space-y-2">
-        <button className="btn join-item">View</button>
-        <button className="btn join-item">Edit</button>
+        <Link className="btn join-item" to={`/coffeeDetails/${id}`}>View</Link>
+        <Link className="btn join-item" to={`/update-coffee/${id}`}>Edit</Link>
         <button onClick={() => handleDelete(id)} className="btn join-item">Delete</button>
         </div>
     </div>
