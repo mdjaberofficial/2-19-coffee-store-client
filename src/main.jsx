@@ -12,9 +12,10 @@ import UpdateCoffee from './components/UpdateCoffee.jsx';
 import CoffeeDetails from './components/CoffeeDetails.jsx';
 
 import SignUp from './components/SignUp.jsx';
-import SignIn from './components/Signin.jsx';
+
 import AuthProvider from './contexts/AuthProvider.jsx';
 import Users from './components/Users.jsx';
+import SignIn from './components/Signin.jsx';
 
 
 
@@ -25,17 +26,17 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: () => fetch('http://localhost:3000/coffees'), 
+        loader: () => fetch('https://2-19-coffee-store-server-v1.vercel.app/coffees'), 
         Component: Home
       },
 
       {path: "/add-coffee", Component: AddCoffee},
       {path: "/coffeeDetails/:id",
         Component: CoffeeDetails,
-        loader: ({params}) => fetch(`http://localhost:3000/coffees/${params.id}`), 
+        loader: ({params}) => fetch(`https://2-19-coffee-store-server-v1.vercel.app/${params.id}`), 
       },
       {path: "/update-coffee/:id",
-        loader: ({params}) => fetch(`http://localhost:3000/coffees/${params.id}`),
+        loader: ({params}) => fetch(`https://2-19-coffee-store-server-v1.vercel.app/${params.id}`),
         Component: UpdateCoffee
       },
       {
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/users",
-        loader: () => fetch('http://localhost:3000/users'),
+        loader: () => fetch('https://2-19-coffee-store-server-v1.vercel.app/users'),
         Component: Users,
       }
       
