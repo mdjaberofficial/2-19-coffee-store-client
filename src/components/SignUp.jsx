@@ -12,9 +12,14 @@ const SignUp = () => {
         const form = e.target;
         const formData = new FormData(form);
 
-        const {email, password, ...userProfile} = Object.fromEntries(formData);
+        const {email, password, ...rest} = Object.fromEntries(formData);
+
+        const userProfile = {
+           email,
+            ...rest,  
+        }
         
-        console.log(email, password, userProfile);
+        console.log(email, password, rest);
 
 
        
