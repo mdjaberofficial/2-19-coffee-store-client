@@ -12,14 +12,11 @@ const SignUp = () => {
         const form = e.target;
         const formData = new FormData(form);
 
-        const {email, password, ...rest} = Object.fromEntries(formData);
+        const {email, password, ...restFormData} = Object.fromEntries(formData);
 
-        const userProfile = {
-           email,
-            ...rest,  
-        }
+       
         
-        console.log(email, password, rest);
+        console.log(email, password, restFormData);
 
 
        
@@ -29,6 +26,15 @@ const SignUp = () => {
         .then(result => {
             const user = result.user;
             console.log(user);
+
+             const userProfile = {
+                email,
+                ...restFormData,
+                creationTime: result.user?.metadata?.creationTime,
+                lastSignInTime: result.user?.metadata?.lastSignInTime,
+
+                
+        }
 
             //save profile info to database
             fetch('http://localhost:3000/users', {
